@@ -1,0 +1,68 @@
+<div class="calendar" (outside)="clickout($event)" >
+
+    <div style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: row; justify-content: center; align-items:center; padding:10px;flex-direction: column;">
+        <div *ngIf="suggestions" style="display: block;">
+            <button class="dateBtn" (click)="selectDay(today)">сегодня</button>
+            <button class="dateBtn" (click)="selectDay(today)">вчера</button>
+            <button class="dateBtn" (click)="selectDay(today)">неделя</button>
+            <button class="dateBtn" (click)="selectDay(today)">месяц</button>
+            <button class="dateBtn" (click)="selectDay(today)">3 месяца</button>
+            <button class="dateBtn" (click)="selectDay(today)">6 месяцев</button>
+        </div>
+      <div style="padding-top:10px; display:flex; flex-direction: row; justify-content: space-between; width: 100%;">
+          <a href="javascript:void(0)" (click)="showPrev()" class="btnPrevNext"><</a>
+          <div class="yearBtn" (click)="showViewMonth(currentMonth, $event)">
+              <span *ngIf="monthMode" style="margin-right:3px">{{getMonthByNUm(currentMonth.getMonth())}}</span> <span>{{currentMonth.getFullYear()}}</span>
+          </div>
+          <a href="javascript:void(0)" (click)="showNext()"  class="btnPrevNext">></a>
+      </div>
+      
+      
+    
+  
+    </div>
+    <div style="padding: 8px 10px;">
+      
+      <div *ngIf="weekLabels&&monthMode" class="row">
+        <div class="col h" *ngFor="let label of weekLabels">
+          {{label}}
+        </div>
+      </div>
+  
+  
+      <div *ngIf="weekCalend&&monthMode">
+        <div class="row" *ngFor="let week of weekCalend">
+            <div 
+              *ngFor="let day of week" 
+              class="col" 
+              [ngClass]="{currentMonth:day.currentMonth, isNowDate: day.isNowDate, isWeekEnd: day.isWeekEnd, isSelected: day.isSelected, markedPeriod: day.markedPeriod, disabled: day.disabled }" 
+              (click)="clickDate(day, $event)"
+              (mouseover)="hoverDate(day)"
+            >
+            {{day.num}}
+            <div></div>
+          </div>
+        </div>     
+      </div>
+  
+  
+      <div *ngIf="monthCalend&&!monthMode">
+        <div class="row" *ngFor="let months of monthCalend">
+            <div 
+              *ngFor="let month of months"
+              class="col month"
+              (click)="showMonth(month.date, $event)"
+            >
+            {{getMonthByNUm(month.month)}} 
+            </div>
+        </div>     
+      </div>
+  
+    </div>
+    <div *ngIf="currentMonth" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: row; justify-content: center; align-items:center; padding:10px; font-size: 11px">
+        <div *ngIf="this.selectedDay">{{this.selectedDay.date |date:'shortDate'}} </div>
+        <div *ngIf="this.selectedDay2"> - </div>
+        <div *ngIf="this.selectedDay2">{{this.selectedDay2.date | date:'shortDate'}}</div>
+    </div>
+  
+  </div>

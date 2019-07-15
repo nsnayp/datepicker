@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "datepicker": [
+        "dist/datepicker"
+      ],
+      "datepicker/*": [
+        "dist/datepicker/*"
+      ]
+    }
   }
 }

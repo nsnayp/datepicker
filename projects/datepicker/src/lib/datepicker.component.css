@@ -1,0 +1,131 @@
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.col{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+    font-size: .8em;
+    padding: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+    color:#c7c7c7;
+    animation: slide-up 0.2s ease-in;
+    text-align: center;
+}
+
+@keyframes slide-up {
+    0% {
+        opacity: 0.5;
+        
+    }
+    100% {
+        opacity: 1;
+        
+    }
+}
+
+.col.markedPeriod{background:#d5ebff!important; border-radius: 0 !important; transition: all 0.2s}
+
+.col.isSelected.markedPeriod{
+    border-radius: 2px !important;
+}
+.col.isSelected{
+    background:#5eb3fc !important;
+    color:#fff !important;
+}
+
+.dateBtn{
+    float:left;
+    background: #f3f3f3;
+    border: 0;
+    font-size: 0.74em;
+    color: #2fafff;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 2px;
+    padding: 2px 4px;
+}
+.dateBtn:hover{
+    background: #6398e0;
+    color:#fff;
+}
+
+
+.col.currentMonth{
+    color:#353540;
+}
+
+.col.isNowDate{
+    color:#3f92ff;
+}
+
+.col.isWeekEnd.currentMonth{
+    color:#c53c3c;
+}
+
+.col.disabled{
+    background: whitesmoke;
+    color: #afafaf ;
+}
+.col:hover{
+    background: #eee;
+}
+.col.month:hover{
+    background: #eee;
+}
+.col.month{
+    font-size: 11px;
+    color: #545454;
+    padding: 16px 8px;
+    box-shadow: 0px 0px 0px 1px #f4f3f3;
+    background: #fff;
+    border-radius: 0;
+    min-width: 40px;
+}
+
+.col.h{
+    color: #FF9A19;
+    text-transform: uppercase;
+}
+.col.h:hover{
+    background: #fff;
+}
+
+.calendar{
+    float: left;
+    box-shadow: 0 3px 12px -5px rgb(0, 0, 0);
+    max-width: 200px;
+    animation: slide-up 0.05s;   
+    background: #fff;
+}
+
+
+.btnPrevNext{
+    font-size: 14px;
+        padding: 6px 8px;
+        
+        border-radius: 2px;
+        color: #5eb3fc;
+        text-decoration: none;
+}
+
+.btnPrevNext:hover{
+    background: #f4f3f3;
+}
+
+.yearBtn{
+    font-size: 14px;
+    padding: 6px 10px;
+    
+    border-radius: 2px;
+    color: #585858; cursor: pointer;
+}
+.yearBtn:hover{
+    background: #f4f3f3;
+}
