@@ -3,11 +3,6 @@
     <div style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: row; justify-content: center; align-items:center; padding:10px;flex-direction: column;">
         <div *ngIf="suggestions" style="display: block;">
             <button class="dateBtn" (click)="selectDay(today)">сегодня</button>
-            <button class="dateBtn" (click)="selectDay(today)">вчера</button>
-            <button class="dateBtn" (click)="selectDay(today)">неделя</button>
-            <button class="dateBtn" (click)="selectDay(today)">месяц</button>
-            <button class="dateBtn" (click)="selectDay(today)">3 месяца</button>
-            <button class="dateBtn" (click)="selectDay(today)">6 месяцев</button>
         </div>
       <div style="padding-top:10px; display:flex; flex-direction: row; justify-content: space-between; width: 100%;">
           <a href="javascript:void(0)" (click)="showPrev()" class="btnPrevNext"><</a>

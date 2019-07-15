@@ -80,6 +80,8 @@ export class DatepickerComponent implements OnInit {
   suggestions: boolean;
   monthCalend = [];
   disabledBefore: boolean;
+  disabledAfter: boolean;
+  lang: string;
 
 
   clickout(event) {
@@ -92,7 +94,7 @@ export class DatepickerComponent implements OnInit {
   }
   change() {
     let data = {};
-    if(!this.selectPeriodEnabled){
+    if (!this.selectPeriodEnabled) {
       data = {
         dateStart: this.selectedDay.date,
       };
@@ -105,7 +107,7 @@ export class DatepickerComponent implements OnInit {
     this.onChanged.emit(data);
   }
   getMonthByNUm(num: number) {
-    const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const months = this.langs()['month'][this.lang];
     return months[num];
   }
   ngOnInit() {
@@ -128,6 +130,10 @@ export class DatepickerComponent implements OnInit {
     this.numDay = this.date.getDay();
     this.suggestions = (this.options.suggestions) ? this.options.suggestions : false;
     this.disabledBefore = (this.options.disabledBefore) ? this.options.disabledBefore : false;
+    this.disabledAfter = (this.options.disabledAfter) ? this.options.disabledAfter : false;
+    this.lang = (this.options.lang) ? this.options.lang : 'en';
+    this.weekends = (this.options.weekends) ? this.options.weekends : [5, 6];
+    this.weekStart = (this.options.weekStart) ? this.options.weekStart : 1;
 
     this.getWeekLabels();
     this.showView(this.currentMonth);
@@ -136,7 +142,7 @@ export class DatepickerComponent implements OnInit {
     //this.selectDay()
   }
 
-  showMonth(date: Date, event){
+  showMonth(date: Date, event) {
     event.stopPropagation();
     this.showView(date);
     this.currentMonth = date;
@@ -147,8 +153,24 @@ export class DatepickerComponent implements OnInit {
     return (trueNum < this.weekStart) ? 7 + trueNum - this.weekStart : trueNum - this.weekStart;
   }
 
+  langs(){
+    const lang = {
+      week : {
+        en : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St'],
+        ru : ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+      },
+      month : {
+        en : ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October','November','December'],
+        ru : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь','Октябрь','Ноябрь','Декабрь'],
+      }
+
+    }
+    return lang;
+  }
+
+
   getWeekLabels() {
-    this.weekLabels = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    this.weekLabels = this.langs()['week'][this.lang];
     this.weekLabels = this.weekLabels.splice(this.weekStart).concat(this.weekLabels);
   }
 
@@ -178,7 +200,7 @@ export class DatepickerComponent implements OnInit {
       const item: any = this.calend[i];
       if (this.selectedDay && this.selectedDay.yearDayNum === item.yearDayNum && this.selectedDay.date.getFullYear() === item.date.getFullYear()) {
         this.calend[i].isSelected = true;
-      } else if (this.selectedDay2 && this.selectedDay2.yearDayNum === item.yearDayNum && this.selectedDay2.date.getFullYear() === item.date.getFullYear() ) {
+      } else if (this.selectedDay2 && this.selectedDay2.yearDayNum === item.yearDayNum && this.selectedDay2.date.getFullYear() === item.date.getFullYear()) {
         this.calend[i].isSelected = true;
       }
       else {
@@ -237,17 +259,17 @@ export class DatepickerComponent implements OnInit {
   }
 
   clickDate(day, event = null) {
-    (event) ? event.stopPropagation():null;
-    if(!day.disabled){
+    (event) ? event.stopPropagation() : null;
+    if (!day.disabled) {
       this.selectDay(day);
     }
-    
+
   }
 
   markPeriodDates(day = null) {
     for (let i = 0; i < this.calend.length; i++) {
       const item = this.calend[i];
- 
+
       if (
         day && this.selectedDay && !this.selectedDay2 && (
           (item.yearDayNum >= day.yearDayNum && item.yearDayNum <= this.selectedDay.yearDayNum)
@@ -289,7 +311,7 @@ export class DatepickerComponent implements OnInit {
   }
 
   showViewMonth(date: Date, event = null) {
-    (event)? event.stopPropagation(): null;
+    (event) ? event.stopPropagation() : null;
     const year = date.getFullYear();
     for (let k = 0; k < 4; k++) {
       this.monthCalend[k] = [];
@@ -304,10 +326,26 @@ export class DatepickerComponent implements OnInit {
       }
     }
 
-    console.log(this.monthCalend)
+    console.log(this.monthCalend);
     this.monthMode = false;
 
   }
+
+  isDisabled(date: Date) {
+    let a = this.getDate(date);
+    a.setHours(0, 0, 0, 0);
+    let b = this.getDate(new Date());
+    b.setHours(0, 0, 0, 0);
+    console.log(a,b, a.valueOf(), b.valueOf());
+    if(this.disabledBefore){
+      return (this.disabledBefore && a.valueOf() < b.valueOf()) ? true : false;
+    }else if(this.disabledAfter){
+      return (this.disabledAfter && a.valueOf() > b.valueOf()) ? true : false;
+    }
+    return false;
+    
+  }
+
 
   showView(date: Date) {
     this.daysInMonth = this.getDaysInMonth(date);
@@ -335,7 +373,7 @@ export class DatepickerComponent implements OnInit {
           currentMonth: false,
           isNowDate: this.isNowDate(date),
           isWeekEnd: this.isWeekEnd(date),
-          disabled: (this.disabledBefore&&this.today.date.valueOf()>date.valueOf())? true: false
+          disabled: this.isDisabled(date)
         });
       }
     }
@@ -350,7 +388,7 @@ export class DatepickerComponent implements OnInit {
         currentMonth: true,
         isNowDate: this.isNowDate(date),
         isWeekEnd: this.isWeekEnd(date),
-        disabled: (this.disabledBefore&&this.today.date.valueOf()>date.valueOf())? true: false
+        disabled: this.isDisabled(date)
       });
 
     }
@@ -365,7 +403,7 @@ export class DatepickerComponent implements OnInit {
           currentMonth: false,
           isNowDate: this.isNowDate(date),
           isWeekEnd: this.isWeekEnd(date),
-          disabled: (this.disabledBefore&&this.today.date.valueOf()>date.valueOf())? true: false
+          disabled: this.isDisabled(date)
         });
       }
     }

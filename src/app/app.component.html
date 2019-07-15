@@ -1,5 +1,10 @@
 <div>
-  <a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{label}}</a>
-  </div>
+<a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{label}}</a>
+</div>
+<ns-datepicker *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates1" [options]=options1 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
 
-  <ns-datepicker *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates" [options]=options (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
+
+<ns-datepicker  *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates2" [options]=options2 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
+
+
+<ns-datepicker  *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates3" [options]=options3 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>

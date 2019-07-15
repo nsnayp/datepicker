@@ -7,35 +7,57 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'calendar';
-  calendarVisible = false;
-  options;
+  calendarVisible = true;
+  options1;
+  options2;
+  options3;
   label;
-  dates;
+  dates1;
+  dates2;
+  dates3;
 
   constructor() {
-    this.options = {
+    this.options1 = {
+      selectPeriodEnabled: true,
+      suggestions: false,
+
+      lang: 'en',
+      weekends: [],
+      weekStart: 0
+    };
+    this.options2 = {
+      selectPeriodEnabled: true,
+      suggestions: true,
+      lang: 'ru',
+      weekends: [5, 6],
+      weekStart: 1
+    };
+    this.options3 = {
       selectPeriodEnabled: false,
-      suggestions : false,
-      disabledBefore: true
+      suggestions: false,
+      disabledBefore: true,
+      lang: 'ru',
+      weekends: [6],
+      weekStart: 2
     };
   }
 
   ngOnInit() {
-    this.dates = {
+    this.dates1 = {
       dateStart: new Date(),
-      //dateEnd: new Date(),
+      dateEnd: new Date(),
     };
-    this.label = this.dates.dateStart.toString();
-  }
-  onClickOut() {
-    this.calendarVisible = false;
+
+    this.dates2 = {
+      dateStart: new Date(),
+      dateEnd: new Date(),
+    };
+    this.dates3 = {
+      dateStart: new Date(),
+      dateEnd: new Date(),
+    };
   }
 
-  onChanged(data) {
-    this.dates = data;
-    this.label = this.dates.dateStart.toString();
-    this.calendarVisible = false;
-  }
 
 }
 

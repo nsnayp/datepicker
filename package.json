@@ -9,7 +9,14 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "keywords": [
+    "datepicker",
+    "calendar",
+    "angular",
+    "date"
+  ],
+  "author": "Ivanov.N <nikaglichev@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@angular/animations": "~7.2.0",
     "@angular/common": "~7.2.0",

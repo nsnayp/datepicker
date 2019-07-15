@@ -1,7 +1,7 @@
 # Datepicker
 
 `npm i datepicker-ns`
-![angular datepicker](http://kb.etsgroup.ru/uploads/a477339baec1a80e3c61eb1f3bd7b2958088c977.png)
+![angular datepicker](http://kb.etsgroup.ru/uploads/ed4fce3df256ba7bffdd254f6017e4788320668b.png)
 
 ## Getting started
 
@@ -10,16 +10,20 @@ Set to imports app.module.ts `import { DatepickerModule } from 'datepicker-ns'`.
 
 ## Options
 Structure of `option` object:
+`lang` - "en" or "ru", 
 `selectPeriodEnabled` - mode selection, single date or period (boolean)
 `suggestions` - today, yesterday, week, etc buttons for quick selection (boolean)
 `disabledBefore` - disable selection date before now (boolean)
+`disabledAfter` - disable selection date after now (boolean)
+`weekends` - array of days in week, default = [5, 6]
+`weekStart` - num of week day started week
+
 
 Structure of `dates` object:
 `[
     dateStart : ?<Date>,
     dateEnd: ?<Date>
 ]`
-
 
 ## Events
 `onClickOut()` - click out of calendar for hide (close) datepicker () 
