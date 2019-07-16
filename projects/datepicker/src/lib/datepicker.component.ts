@@ -83,7 +83,7 @@ export class DatepickerComponent implements OnInit {
   disabledAfter: boolean;
   lang: string;
   submitMode: boolean;
-  time: {};
+  time;
 
 
   clickout(event) {

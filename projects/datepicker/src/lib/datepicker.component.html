@@ -54,7 +54,7 @@
       </div>
   
     </div>
-    <div *ngIf="time.enabled" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: column; justify-content: center; padding:10px; font-size: 11px">
+    <div *ngIf="time&&time.enabled" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: column; justify-content: center; padding:10px; font-size: 11px">
         
       <div *ngIf="selectedDay" >
         <ns-time [date]="selectedDay" changed="timeChange(data)"></ns-time>
