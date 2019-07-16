@@ -54,10 +54,21 @@
       </div>
   
     </div>
-    <div *ngIf="currentMonth" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: row; justify-content: center; align-items:center; padding:10px; font-size: 11px">
-        <div *ngIf="this.selectedDay">{{this.selectedDay.date |date:'shortDate'}} </div>
-        <div *ngIf="this.selectedDay2"> - </div>
-        <div *ngIf="this.selectedDay2">{{this.selectedDay2.date | date:'shortDate'}}</div>
+    <div *ngIf="time.enabled" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: column; justify-content: center; padding:10px; font-size: 11px">
+        
+      <div *ngIf="selectedDay" >
+        <ns-time [date]="selectedDay" changed="timeChange(data)"></ns-time>
+      </div>
+
+      <div *ngIf="this.selectedDay2" >
+        <ns-time [date]="selectedDay2" changed="timeChange(data)"></ns-time>
+      </div>
+    </div>
+
+
+    <div *ngIf="time.enabled||(!time.enabled&&submitMode)" style=" display:flex; flex-direction: row; justify-content: space-between; align-items:center; padding:10px; font-size: 11px">
+      <button class="btnCancel">{{(lang=='en')?'cancel':'отмена'}}</button>
+      <button class="btnOk" (click)="submit()">{{(lang=='en')?'ok':'ок'}}</button>
     </div>
   
   </div>

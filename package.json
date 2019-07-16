@@ -1,6 +1,7 @@
 {
   "name": "dp",
   "version": "0.0.0",
+  "description": "Angular datepicker",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

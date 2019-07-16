@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 .calendar{
-    margin: 15px
+    margin: 80px 15px
+}
+
+*{
+    font-family: sans-serif;
+}
+body{
+    /*background: #eee;*/
+    background: radial-gradient(#d2d2d2 -3%,#fff 65%);
+    border: 1px solid #000;
+}
+app-root{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
 }

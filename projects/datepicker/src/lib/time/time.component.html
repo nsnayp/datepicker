@@ -1,0 +1,12 @@
+<div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center; padding: 4px;color: #6f6f6f;background: linear-gradient(90deg,#fff, #e7f4ff); ">
+  <div >{{date.date.getDate()}}.{{date.date.getMonth()+1}}.{{date.date.getFullYear()}} </div>
+    <div>
+      <select [(ngModel)]="hour"  (change)="hourChange()"  style="border: 0; background: transparent; padding: 2px;font-size: 11px; outline: none;">
+        <option *ngFor="let hour of getTimeArays()['hour']" [ngValue]="hour.val">{{hour.label}}</option>
+      </select>
+      <select [(ngModel)]="minute" (change)="minuteChange()" style="border: 0; background: transparent; padding: 2px;font-size: 11px; outline: none;">
+        <option *ngFor="let min of getTimeArays()['min']" [ngValue]="min.val">{{min.label}}</option>
+      </select>
+    </div>
+
+</div>

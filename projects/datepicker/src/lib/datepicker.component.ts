@@ -82,21 +82,33 @@ export class DatepickerComponent implements OnInit {
   disabledBefore: boolean;
   disabledAfter: boolean;
   lang: string;
+  submitMode: boolean;
+  time: {};
 
 
   clickout(event) {
-    console.log('CLICKOUT')
+    console.log('CLICKOUT');
     this.onClickOut.emit();
   }
 
   constructor() {
 
   }
+
+  timeChange(data) {
+    //console.log(data)
+  }
+
+  submit() {
+    this.change();
+  }
+
   change() {
     let data = {};
     if (!this.selectPeriodEnabled) {
       data = {
         dateStart: this.selectedDay.date,
+        dateEnd: null
       };
     } else {
       data = {
@@ -104,6 +116,7 @@ export class DatepickerComponent implements OnInit {
         dateEnd: this.selectedDay2.date
       };
     }
+    console.log('changed',data)
     this.onChanged.emit(data);
   }
   getMonthByNUm(num: number) {
@@ -134,6 +147,13 @@ export class DatepickerComponent implements OnInit {
     this.lang = (this.options.lang) ? this.options.lang : 'en';
     this.weekends = (this.options.weekends) ? this.options.weekends : [5, 6];
     this.weekStart = (this.options.weekStart) ? this.options.weekStart : 1;
+
+    this.submitMode = (this.options.submitMode) ? this.options.submitMode : false;
+    this.time = (this.options.time) ? this.options.time : {
+      enabled: false
+    };
+
+
 
     this.getWeekLabels();
     this.showView(this.currentMonth);
@@ -168,6 +188,7 @@ export class DatepickerComponent implements OnInit {
     return lang;
   }
 
+  
 
   getWeekLabels() {
     this.weekLabels = this.langs()['week'][this.lang];
@@ -242,7 +263,10 @@ export class DatepickerComponent implements OnInit {
     if (this.selectPeriodEnabled) {
       this.markPeriodDates();
     }
-    this.change();
+    if(!this.submitMode){
+      this.change();
+    }
+    
   }
 
 
@@ -325,8 +349,6 @@ export class DatepickerComponent implements OnInit {
         );
       }
     }
-
-    console.log(this.monthCalend);
     this.monthMode = false;
 
   }
@@ -336,7 +358,6 @@ export class DatepickerComponent implements OnInit {
     a.setHours(0, 0, 0, 0);
     let b = this.getDate(new Date());
     b.setHours(0, 0, 0, 0);
-    console.log(a,b, a.valueOf(), b.valueOf());
     if(this.disabledBefore){
       return (this.disabledBefore && a.valueOf() < b.valueOf()) ? true : false;
     }else if(this.disabledAfter){

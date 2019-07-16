@@ -1,7 +1,8 @@
 # Datepicker
 
+
+![angular datepicker](http://kb.etsgroup.ru/uploads/ee0ff74503305bb6102f234dad6f7a71e08c8c7d.png)
 `npm i datepicker-ns`
-![angular datepicker](http://kb.etsgroup.ru/uploads/ed4fce3df256ba7bffdd254f6017e4788320668b.png)
 
 ## Getting started
 
@@ -17,6 +18,8 @@ Structure of `option` object:
 `disabledAfter` - disable selection date after now (boolean)
 `weekends` - array of days in week, default = [5, 6]
 `weekStart` - num of week day started week
+`time.enabled` - select time for date (turn on submitMode)
+`submitMode` - submit buttons (true when option time.enabled == true)
 
 
 Structure of `dates` object:

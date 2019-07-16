@@ -103,6 +103,7 @@
     max-width: 200px;
     animation: slide-up 0.05s;   
     background: #fff;
+    border-radius: 8px;
 }
 
 
@@ -128,4 +129,32 @@
 }
 .yearBtn:hover{
     background: #f4f3f3;
+}
+
+.btnOk{
+    border: 0;
+    background: #5eb3fc;
+    padding: 8px 16px;
+    color: #fff;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+.btnOk:hover{
+    background: #3e99e6;
+}
+
+
+.btnCancel{
+    border: 0;
+    background: #fff;
+    padding: 8px 16px;
+    color: #5eb3fc;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btnCancel:hover{
+    background: #e4f3ff;
 }
