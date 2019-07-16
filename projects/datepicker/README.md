@@ -3,6 +3,9 @@
 
 ![angular datepicker](http://kb.etsgroup.ru/uploads/de3f5adde25fffdf5ab3f5fc0e92d6d6beec9ed4.png)
 `npm i datepicker-ns`
+## DEMO
+[https://nsnayp.github.io/datepicker/datepicker/index.html](https://nsnayp.github.io/datepicker/datepicker/index.html)
+
 
 ## Getting started
 
