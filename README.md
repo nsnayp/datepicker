@@ -1,7 +1,7 @@
 # Datepicker
 
 
-![angular datepicker](http://kb.etsgroup.ru/uploads/ee0ff74503305bb6102f234dad6f7a71e08c8c7d.png)
+![angular datepicker](http://kb.etsgroup.ru/uploads/de3f5adde25fffdf5ab3f5fc0e92d6d6beec9ed4.png)
 `npm i datepicker-ns`
 
 ## Getting started
