@@ -1,0 +1,34 @@
+{
+  "name": "datepicker-ns",
+  "version": "0.2.2",
+  "description": "Angular datepicker",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nsnayp/datepicker"
+  },
+  "keywords": [
+    "datepicker",
+    "calendar",
+    "angular",
+    "date"
+  ],
+  "author": "Ivanov.N <nikaglichev@gmail.com>",
+  "license": "MIT",
+  "main": "bundles/datepicker-ns.umd.js",
+  "module": "fesm5/datepicker-ns.js",
+  "es2015": "fesm2015/datepicker-ns.js",
+  "esm5": "esm5/datepicker-ns.js",
+  "esm2015": "esm2015/datepicker-ns.js",
+  "fesm5": "fesm5/datepicker-ns.js",
+  "fesm2015": "fesm2015/datepicker-ns.js",
+  "typings": "datepicker-ns.d.ts",
+  "metadata": "datepicker-ns.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
