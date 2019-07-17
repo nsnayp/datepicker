@@ -57,7 +57,8 @@ export class DatepickerComponent implements OnInit {
   @Output() onChanged = new EventEmitter();
   @Output() onCanceled = new EventEmitter();
   @Output() onClickOut = new EventEmitter<boolean>();
-  @Input() dates;
+  @Input() datesInit;
+  dates;
   initDate;
   today = { date: new Date(), yearDayNum: this.getNumOfYear(new Date()) };
   yesterday = new Date();
@@ -96,7 +97,7 @@ export class DatepickerComponent implements OnInit {
 
   }
 
-  cancel(){
+  cancel() {
     this.onCanceled.emit();
   }
 
@@ -130,6 +131,14 @@ export class DatepickerComponent implements OnInit {
     return months[num];
   }
   ngOnInit() {
+    if (!this.datesInit.dateStart) {
+      this.dates = {
+        dateStart : new Date(),
+        dateEnd: null
+      };
+    } else {
+      this.dates = Object.assign(this.datesInit)
+    }
 
     this.selectPeriodEnabled = (this.options.selectPeriodEnabled) ? this.options.selectPeriodEnabled : false;
 
