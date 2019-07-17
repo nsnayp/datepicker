@@ -9,7 +9,7 @@
 
 ## Getting started
 
-Set to imports app.module.ts `import { DatepickerModule } from 'datepicker-ns'`. Then you can use it by tag  `<ns-datepicker [dates]="dates" [options]=options (onClickOut) (onChanged)></ns-datepicker>`.
+Set to imports app.module.ts `import { DatepickerModule } from 'datepicker-ns'`. Then you can use it by tag  `<ns-datepicker [dates]=dates [options]=options  (onCanceled) (onClickOut) (onChanged)></ns-datepicker>`.
 
 
 ## Options
@@ -34,7 +34,7 @@ Structure of `dates` object:
 ## Events
 `onClickOut()` - click out of calendar for hide (close) datepicker () 
 `onChanged()` - return `dates` object when date changeed
-
+`onCanceled()` - call when btn 'cancel' clicked
 
 ## Example
 
@@ -50,5 +50,5 @@ options = {
 };
 calendarVisible = false;
 <a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{dates.dateStart.toString()}}</a>
-<ns-datepicker [dates]="" [options]=options (onClickOut)="calendarVisible = false" (onChanged)="dates"></ns-datepicker>
+<ns-datepicker [dates]=dates [options]=options  (onCanceled)="calendarVisible = false"  (onClickOut)="" (onChanged)="dates"></ns-datepicker>
 ```

@@ -55,6 +55,7 @@ export class DatepickerComponent implements OnInit {
   @Input() visible;
   @Input() onChangeDate: Function;
   @Output() onChanged = new EventEmitter();
+  @Output() onCanceled = new EventEmitter();
   @Output() onClickOut = new EventEmitter<boolean>();
   @Input() dates;
   initDate;
@@ -94,6 +95,11 @@ export class DatepickerComponent implements OnInit {
   constructor() {
 
   }
+
+  cancel(){
+    this.onCanceled.emit();
+  }
+
 
   timeChange(data) {
     //console.log(data)

@@ -67,7 +67,7 @@
 
 
     <div *ngIf="time.enabled||(!time.enabled&&submitMode)" style=" display:flex; flex-direction: row; justify-content: space-between; align-items:center; padding:10px; font-size: 11px">
-      <button class="btnCancel">{{(lang=='en')?'cancel':'отмена'}}</button>
+      <button class="btnCancel" (click)="cancel()">{{(lang=='en')?'cancel':'отмена'}}</button>
       <button class="btnOk" (click)="submit()">{{(lang=='en')?'ok':'ок'}}</button>
     </div>
   
