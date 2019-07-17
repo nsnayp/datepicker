@@ -122,7 +122,7 @@ export class DatepickerComponent implements OnInit {
         dateEnd: this.selectedDay2.date
       };
     }
-    console.log('changed',data)
+    // console.log('changed',data)
     this.onChanged.emit(data);
   }
   getMonthByNUm(num: number) {

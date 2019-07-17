@@ -1,10 +1,31 @@
 <div>
 <a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{label}}</a>
 </div>
-<ns-datepicker *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates1" [options]=options1 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
 
-<ns-datepicker  *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates2" [options]=options2 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
 
-<ns-datepicker  *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates3" [options]=options3 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
+<div>
+<div>
+<a style="font-size: 12px;" href='javascript:void(0)' (click)="visible1=true">{{label1}}</a>
 
-<ns-datepicker  *ngIf="calendarVisible" [visible]="calendarVisible" [dates]="dates4" [options]=options4 (onClickOut)="onClickOut()" (onChanged)="onChanged($event)"></ns-datepicker>
+</div>
+
+<div>
+<a style="font-size: 12px;" href='javascript:void(0)' (click)="visible2=true">{{label2}}</a>
+
+</div>
+
+<div>
+<a style="font-size: 12px;" href='javascript:void(0)' (click)="visible3=true">{{label3}}</a>
+
+</div>
+
+
+<div>
+<a style="font-size: 12px;" href='javascript:void(0)' (click)="visible4=true">{{label4}}</a>
+
+</div>
+<ns-datepicker *ngIf="visible1" [visible]="visible1" [dates]="dates1" [options]=options1 (onClickOut)="visible1=false" (onCanceled)="visible1=false" (onChanged)="onChanged1($event)"></ns-datepicker>
+<ns-datepicker  *ngIf="visible2" [visible]="visible2" [dates]="dates2" [options]=options2 (onClickOut)="visible2=false" (onCanceled)="visible2=false" (onChanged)="onChanged2($event)"></ns-datepicker>
+<ns-datepicker  *ngIf="visible3" [visible]="visible3" [dates]="dates3" [options]=options3 (onClickOut)="visible3=false" (onCanceled)="visible3=false" (onChanged)="onChanged3($event)"></ns-datepicker>
+<ns-datepicker  *ngIf="visible4" [visible]="visible4" [dates]="dates4" [options]=options4 (onClickOut)="visible4=false" (onCanceled)="visible4=false" (onChanged)="onChanged4($event)"></ns-datepicker>
+</div>
