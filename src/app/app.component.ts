@@ -28,24 +28,34 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.options1 = {
-      selectPeriodEnabled: true,
-      suggestions: true,
-
-      lang: 'ru',
-      weekends: [],
-      weekStart: 0,
-      submitMode: true
-    };
-    this.options2 = {
-      selectPeriodEnabled: true,
-      suggestions: false,
-      lang: 'en',
       weekends: [5, 6],
       weekStart: 1,
-      time: {
-        enabled: true
+      lang: 'en',
+      selection: {
+        mode: 'period',
+        ctrlShift: false
       },
-      submitMode: true
+      timeMode: true,
+      submitMode: false,
+      suggestions: {
+        enabled: false
+      },
+      initDates: [new Date()]
+    };
+    this.options2 = {
+      weekends: [5, 6],
+      weekStart: 1,
+      lang: 'ru',
+      selection: {
+        mode: 'multiple',
+        ctrlShift: false
+      },
+      timeMode: true,
+      submitMode: false,
+      suggestions: {
+        enabled: false
+      },
+      initDates: [new Date()]
     };
     this.options3 = {
       selectPeriodEnabled: false,
@@ -77,12 +87,14 @@ export class AppComponent implements OnInit {
 
   onChanged1(date) {
     this.dates1 = date;
-    this.label1 = date.dateStart.toString() + ' - ' + date.dateEnd.toString();
+    this.options1.initDates = date;
+    this.label1 = this.options1.initDates.join(' - ');
     this.visible1 = false;
   }
   onChanged2(date) {
     this.dates2 = date;
-    this.label2 = date.dateStart.toString() + ' - ' + date.dateEnd.toString();
+    this.options2.initDates = date;
+    this.label2 = this.options2.initDates.join(' - ');
     this.visible2 = false;
   }
   onChanged3(date) {
@@ -116,10 +128,10 @@ export class AppComponent implements OnInit {
       dateEnd: new Date(),
     };
 
-    this.label1 = this.dates1.dateStart.toString() + ' - ' + this.dates1.dateEnd.toString();
-    this.label2 = this.dates2.dateStart.toString() + ' - ' + this.dates2.dateEnd.toString();
-    this.label3 = this.dates3.dateStart.toString();
-    this.label4 = this.dates4.dateStart.toString() + ' - ' + this.dates4.dateEnd.toString();
+    this.label1 = this.options1.initDates.join(' - ');
+    this.label2 = this.options2.initDates.join(' - ');
+    this.label3 = this.options3.initDates.join(' - ');
+    this.label4 = this.options4.initDates.join(' - ');
 
   }
 

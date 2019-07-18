@@ -6,8 +6,8 @@
         </div>
       <div style="padding-top:10px; display:flex; flex-direction: row; justify-content: space-between; width: 100%;">
           <a href="javascript:void(0)" (click)="showPrev()" class="btnPrevNext"><</a>
-          <div class="yearBtn" (click)="showViewMonth(currentMonth, $event)">
-              <span *ngIf="monthMode" style="margin-right:3px">{{getMonthByNUm(currentMonth.getMonth())}}</span> <span>{{currentMonth.getFullYear()}}</span>
+          <div class="yearBtn" (click)="showViewMonth(_currentMonth, $event)">
+              <span *ngIf="_monthMode" style="margin-right:3px">{{getMonthByNUm(_currentMonth.getMonth())}}</span> <span>{{_currentMonth.getFullYear()}}</span>
           </div>
           <a href="javascript:void(0)" (click)="showNext()"  class="btnPrevNext">></a>
       </div>
@@ -18,14 +18,14 @@
     </div>
     <div style="padding: 8px 10px;">
       
-      <div *ngIf="weekLabels&&monthMode" class="row">
+      <div *ngIf="weekLabels&&_monthMode" class="row">
         <div class="col h" *ngFor="let label of weekLabels">
           {{label}}
         </div>
       </div>
   
   
-      <div *ngIf="weekCalend&&monthMode">
+      <div *ngIf="weekCalend&&_monthMode">
         <div class="row" *ngFor="let week of weekCalend">
             <div 
               *ngFor="let day of week" 
@@ -41,8 +41,8 @@
       </div>
   
   
-      <div *ngIf="monthCalend&&!monthMode">
-        <div class="row" *ngFor="let months of monthCalend">
+      <div *ngIf="_monthCalend&&!_monthMode">
+        <div class="row" *ngFor="let months of _monthCalend">
             <div 
               *ngFor="let month of months"
               class="col month"
@@ -54,19 +54,16 @@
       </div>
   
     </div>
-    <div *ngIf="time&&time.enabled" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: column; justify-content: center; padding:10px; font-size: 11px">
-        
-      <div *ngIf="selectedDay" >
-        <ns-time [date]="selectedDay" changed="timeChange(data)"></ns-time>
+    <div *ngIf="_options.timeMode" style="border-bottom: 1px solid #f3f3f3; display:flex; flex-direction: column; justify-content: center; padding:10px; font-size: 11px">
+      
+      <div *ngFor="let date of _options.initDates; let i = index">
+        <ns-time [date]="date" [index]="i" (changed)="timeChange($event)"></ns-time>
       </div>
 
-      <div *ngIf="this.selectedDay2" >
-        <ns-time [date]="selectedDay2" changed="timeChange(data)"></ns-time>
-      </div>
     </div>
 
 
-    <div *ngIf="time.enabled||(!time.enabled&&submitMode)" style=" display:flex; flex-direction: row; justify-content: space-between; align-items:center; padding:10px; font-size: 11px">
+    <div *ngIf="_options.timeMode||(!_options.timeMode&&_options.submitMode)" style=" display:flex; flex-direction: row; justify-content: space-between; align-items:center; padding:10px; font-size: 11px">
       <button class="btnCancel" (click)="cancel()">{{(lang=='en')?'cancel':'отмена'}}</button>
       <button class="btnOk" (click)="submit()">{{(lang=='en')?'ok':'ок'}}</button>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'ns-time',
@@ -9,6 +9,7 @@ export class TimeComponent implements OnInit {
 
 
   @Input() date;
+  @Input() index;
   @Output() changed = new EventEmitter();
 
   hour;
@@ -19,40 +20,39 @@ export class TimeComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log('ngOnInit')
-    this.hour = this.date.date.getHours();
-    this.minute = this.date.date.getMinutes();
-    this.date.date.setHours(this.hour, this.minute);
+    this.hour = this.date.getHours();
+    this.minute = this.date.getMinutes();
+    this.date.setHours(this.hour, this.minute);
     this.inited = true;
   }
 
-  ngOnChanges(){
-    if(this.inited){
-      this.date.date.setHours(this.hour, this.minute);
+  ngOnChanges() {
+    if (this.inited) {
+      this.date.setHours(this.hour, this.minute);
     }
   }
 
   change() {
-    const data = this.date.date;
+    const data = new Date(this.date);
     data.setHours(this.hour, this.minute);
-    this.changed.emit(data);
+    this.changed.emit({index: this.index, date: data});
   }
 
-  hourChange(){
+  hourChange() {
     this.change();
   }
-  minuteChange(){
+  minuteChange() {
     this.change();
   }
 
-  getTimeArays(){
-    const arr = {min:[],hour:[]};
+  getTimeArays() {
+    const arr = { min: [], hour: [] };
     for (let i = 0; i < 60; i++) {
       let k = i.toString();
-      k = (k.length==1)? '0'+k: k;
-      let item = {val:i, label:k}
+      k = (k.length == 1) ? '0' + k : k;
+      let item = { val: i, label: k }
       arr['min'].push(item);
-      if(i<24){
+      if (i < 24) {
         arr['hour'].push(item);
       }
     }
