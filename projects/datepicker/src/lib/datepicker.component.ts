@@ -35,15 +35,16 @@ export class Outside {
   }
 }
 
-
 export interface Suggestions {
   enabled: boolean; // single, perion, multiple
   items?: any[];
 }
+
 export interface Selection {
   mode: string; // single, perion, multiple
   ctrlShift?: boolean;
 }
+
 export interface DayInterface {
   key: number;
   num: number;
@@ -56,6 +57,7 @@ export interface DayInterface {
   markedPeriod?: boolean;
   isSelected?: boolean;
 }
+
 export interface Options {
   weekends: number[];
   lang: string;
@@ -69,7 +71,6 @@ export interface Options {
   days?: Day[];
 }
 
-
 export class Day implements DayInterface {
   key: number;
   num: number;
@@ -82,8 +83,6 @@ export class Day implements DayInterface {
   markedPeriod?: boolean;
   isSelected?: boolean;
 }
-
-
 
 @Component({
   selector: 'ns-datepicker',
