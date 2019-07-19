@@ -64,8 +64,8 @@
 
 
     <div *ngIf="_options.timeMode||(!_options.timeMode&&_options.submitMode)" style=" display:flex; flex-direction: row; justify-content: space-between; align-items:center; padding:10px; font-size: 11px">
-      <button class="btnCancel" (click)="cancel()">{{(lang=='en')?'cancel':'отмена'}}</button>
-      <button class="btnOk" (click)="submit()">{{(lang=='en')?'ok':'ок'}}</button>
+      <button class="btnCancel" (click)="cancel()">{{(_options.lang=='en')?'cancel':'отмена'}}</button>
+      <button class="btnOk" (click)="submit()">{{(_options.lang=='en')?'ok':'ок'}}</button>
     </div>
   
   </div>

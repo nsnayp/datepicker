@@ -42,9 +42,9 @@ export interface Suggestions {
 }
 export interface Selection {
   mode: string; // single, perion, multiple
-  ctrlShift: boolean;
+  ctrlShift?: boolean;
 }
-export interface Day {
+export interface DayInterface {
   key: number;
   num: number;
   date: Date;
@@ -65,8 +65,24 @@ export interface Options {
   submitMode: boolean;
   initDates: Date[];
   suggestions: Suggestions;
+  disabled?: any;
   days?: Day[];
 }
+
+
+export class Day implements DayInterface {
+  key: number;
+  num: number;
+  date: Date;
+  isNowDate: boolean;
+  isWeekEnd: boolean;
+  disabled: boolean;
+  custom?: any;
+  currentMonth: boolean;
+  markedPeriod?: boolean;
+  isSelected?: boolean;
+}
+
 
 
 @Component({
@@ -89,7 +105,11 @@ export class DatepickerComponent implements OnInit {
     suggestions: {
       enabled: false
     },
-    initDates: [new Date()]
+    initDates: [new Date()],
+    disabled: {
+      enabled: false,
+      mode: 'after'
+    }
   };
 
 
@@ -98,17 +118,11 @@ export class DatepickerComponent implements OnInit {
   @Output() onCanceled = new EventEmitter();
   @Output() onClickOut = new EventEmitter<boolean>();
 
-  suggestions: boolean;
-  disabledBefore: boolean;
-  disabledAfter: boolean;
-  lang: string = 'en';
-
-
   private _options: Options;
   private _currentMonth: Date;
   private _monthCalend: any[] = [];
   private _monthMode: boolean = true;
-  private calend: any[];
+  private calend: Day[];
   private weekCalend: any[];
   private hoveredDate: Date;
   private weekLabels;
@@ -125,9 +139,11 @@ export class DatepickerComponent implements OnInit {
   ngOnInit() {
 
     this._options = Object.assign(this.defaultOptions, this.options);
+    this._options.initDates = (this._options.initDates.length === 0) ? [new Date] : this._options.initDates;
+
     const lastDate = this._options.initDates[this._options.initDates.length - 1];
     this._currentMonth = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
-    const weekLabels = this.langs()['week'][this.lang];
+    const weekLabels = this.langs()['week'][this._options.lang];
     this.weekLabels = weekLabels.splice(this._options.weekStart).concat(weekLabels);
 
     this._getMonthsMatrix(this._currentMonth);
@@ -144,7 +160,6 @@ export class DatepickerComponent implements OnInit {
       this.showViewMonth(this._currentMonth);
     }
 
-    
   }
   // half
   showPrev() {
@@ -160,12 +175,12 @@ export class DatepickerComponent implements OnInit {
 
   private withZero(str: any) {
     str = str.toString();
-    return (str.length === 1) ? '0' + str : str ;
+    return (str.length === 1) ? '0' + str : str;
   }
 
   private getDateKey(date: Date) {
     // tslint:disable-next-line: radix
-    return parseInt(date.getFullYear() + '' + this.withZero(date.getMonth()) + '' + this.withZero(date.getDate()) );
+    return parseInt(date.getFullYear() + '' + this.withZero(date.getMonth()) + '' + this.withZero(date.getDate()));
   }
 
 
@@ -199,20 +214,23 @@ export class DatepickerComponent implements OnInit {
         ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
       }
 
-    }
+    };
     return lang;
   }
 
   private isDisabled(date: Date) {
-    /*let a = new Date(date);
+    const a = new Date(date);
     a.setHours(0, 0, 0, 0);
-    let b = new Date(new Date());
+    const b = new Date(new Date());
     b.setHours(0, 0, 0, 0);
-    if (this.disabledBefore) {
-      return (this.disabledBefore && a.valueOf() < b.valueOf()) ? true : false;
-    } else if (this.disabledAfter) {
-      return (this.disabledAfter && a.valueOf() > b.valueOf()) ? true : false;
-    }*/
+    if (this._options.disabled.enabled) {
+      const mode = this._options.disabled.mode;
+      if (mode === 'before') {
+        return (mode === 'before' && a.valueOf() < b.valueOf()) ? true : false;
+      } else if (mode === 'after') {
+        return (mode === 'after' && a.valueOf() > b.valueOf()) ? true : false;
+      }
+    }
     return false;
   }
 
@@ -221,7 +239,7 @@ export class DatepickerComponent implements OnInit {
   }
 
   private getMonthByNUm(num: number) {
-    const months = this.langs()['month'][this.lang];
+    const months = this.langs()['month'][this._options.lang];
     return months[num];
   }
 
@@ -252,15 +270,15 @@ export class DatepickerComponent implements OnInit {
   }
 
   private getDay(date: Date): Day {
-    return {
-      key: this.getDateKey(date),
-      num: date.getDate(),
-      date: new Date(date),
-      isNowDate: this.isNowDate(date),
-      isWeekEnd: this.isWeekEnd(date),
-      disabled: this.isDisabled(date),
-      currentMonth: (date.getFullYear() === this._currentMonth.getFullYear() && date.getMonth() === this._currentMonth.getMonth())
-    };
+    const day = new Day();
+    day.key = this.getDateKey(date);
+    day.num = date.getDate();
+    day.date = new Date(date);
+    day.isNowDate = this.isNowDate(date);
+    day.isWeekEnd = this.isWeekEnd(date);
+    day.disabled = this.isDisabled(date);
+    day.currentMonth = (date.getFullYear() === this._currentMonth.getFullYear() && date.getMonth() === this._currentMonth.getMonth());
+    return day;
   }
 
   // half
@@ -347,19 +365,19 @@ export class DatepickerComponent implements OnInit {
         }
       } else {
         if (this._options.selection.mode === 'multiple') {
-          if (this._options.initDates.includes(day.date)) {
+          /*if (this._options.initDates.includes(day.date)) {
             const index = this._options.initDates.findIndex(el => this.getDateKey(el) === day.key);
             this._options.initDates.splice(index, 1);
-          }
+          }*/
           // May be need unselect
           // this._options.initDates.push(day.date);
           // tslint:disable-next-line: forin
-          /*for(let i in this._options.initDates){
-            let item = this._options.initDates[i];
-            if(this.getDateKey(item) === day.key){
-              this._options.initDates.splice(parseInt(i) ,1);
+          for (const i in this._options.initDates) {
+            const item = this._options.initDates[i];
+            if (this.getDateKey(item) === day.key) {
+              this._options.initDates.splice(parseInt(i), 1);
             }
-          }*/
+          }
         }
       }
     } else {
@@ -368,13 +386,14 @@ export class DatepickerComponent implements OnInit {
 
     this.markselectDay();
     this.markPeriodDates();
+    (!this._options.submitMode && !this._options.timeMode) ? this.change() : null ;
   }
 
   private hoverDate(day: Day) {
     this.markPeriodDates(day);
   }
 
-   // full
+  // full
   private markselectDay() {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.calend.length; i++) {
@@ -389,7 +408,7 @@ export class DatepickerComponent implements OnInit {
     }
   }
 
-  private markPeriodDates(hoveredDate: Day = null ) {
+  private markPeriodDates(hoveredDate: Day = null) {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.calend.length; i++) {
       const item = this.calend[i];
@@ -397,7 +416,7 @@ export class DatepickerComponent implements OnInit {
       if (this._options.selection.mode === 'period') {
         if (this._options.initDates.length === 1 && hoveredDate) {
 
-          if (( item.key >= hoveredDate.key && item.key <= this.getDateKey(this._options.initDates[0]))
+          if ((item.key >= hoveredDate.key && item.key <= this.getDateKey(this._options.initDates[0]))
             || (item.key <= hoveredDate.key && item.key >= this.getDateKey(this._options.initDates[0]))
           ) {
             this.calend[i].markedPeriod = true;
@@ -406,7 +425,7 @@ export class DatepickerComponent implements OnInit {
           }
 
         } else if (this._options.initDates.length === 2) {
-          if ((item.key >= this.getDateKey( this._options.initDates[1]) && item.key <= this.getDateKey(this._options.initDates[0]))
+          if ((item.key >= this.getDateKey(this._options.initDates[1]) && item.key <= this.getDateKey(this._options.initDates[0]))
             || (item.key <= this.getDateKey(this._options.initDates[1]) && item.key >= this.getDateKey(this._options.initDates[0]))
           ) {
             this.calend[i].markedPeriod = true;

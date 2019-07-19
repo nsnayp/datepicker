@@ -9,46 +9,69 @@
 
 ## Getting started
 
-Set to imports app.module.ts `import { DatepickerModule } from 'datepicker-ns'`. Then you can use it by tag  `<ns-datepicker [dates]=dates [options]=options  (onCanceled) (onClickOut) (onChanged)></ns-datepicker>`.
+Set to imports app.module.ts `import { DatepickerModule } from 'datepicker-ns'`. Then you can use it by tag  `<ns-datepicker [options]=options  (onCanceled) (onClickOut) (onChanged) ></ns-datepicker>`.
 
 
 ## Options
+
 Structure of `option` object:
-`lang` - "en" or "ru", 
-`selectPeriodEnabled` - mode selection, single date or period (boolean)
-`suggestions` - today, yesterday, week, etc buttons for quick selection (boolean)
-`disabledBefore` - disable selection date before now (boolean)
-`disabledAfter` - disable selection date after now (boolean)
-`weekends` - array of days in week, default = [5, 6]
-`weekStart` - num of week day started week
-`time.enabled` - select time for date (turn on submitMode)
-`submitMode` - submit buttons (true when option time.enabled == true)
 
+```javascript
 
-Structure of `dates` object:
-`[
-    dateStart : ?<Date>,
-    dateEnd: ?<Date>
-]`
+weekends: number[]; // [5,6] day in week is weekend
+lang: string; // 'ru'|'en'
+weekStart: number; // 1
+selection: {
+    mode: 'single' // 'single'|'period'|'multiple'
+};
+timeMode: boolean; // available change time for selected dates
+submitMode: boolean; // change date on submit buttons
+initDates: Date[]; // array of dates 1 for single, 2 for period, anymore fore multiple selection mode
+disabled?: { // disable date to select
+    enabled: true,
+    mode:'after' // 'after'|'before'
+}; // 
+
+```
+
 
 ## Events
-`onClickOut()` - click out of calendar for hide (close) datepicker () 
-`onChanged()` - return `dates` object when date changeed
-`onCanceled()` - call when btn 'cancel' clicked
-
+```javascript
+onClickOut() // - click out of calendar for hide (close) datepicker () 
+onChanged() // - return `initDates` array when date changed / selected
+onCanceled() // - call when btn 'cancel' clicked
+```
 ## Example
 
 ```javascript
-dates = {
-    dateStart: new Date(),
-    dateEnd: null, 
+ options = {
+    weekends: [5, 6],
+    weekStart: 1,
+    lang: 'en',
+    selection: {
+        mode: 'single',
+        ctrlShift: false
+    },
+    timeMode: false,
+    submitMode: false,
+    suggestions: {
+        enabled: false
+    },
+    initDates: [new Date()],
+    disabled: {
+        enabled: true,
+        mode: 'before'
+    }
 };
-options = {
-    selectPeriodEnabled: false,
-    suggestions : false,
-    disabledBefore: true
-};
+
+onChanged(date) {
+    options.initDates = date;
+    label = (options.initDates.length>0)?options.initDates.join(' - ') : 'Not selected';
+    visible = false;
+}
+
+
 calendarVisible = false;
-<a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{dates.dateStart.toString()}}</a>
-<ns-datepicker [dates]=dates [options]=options  (onCanceled)="calendarVisible = false"  (onClickOut)="" (onChanged)="dates"></ns-datepicker>
+<a href="javascript:void(0)" type="text" (click)="calendarVisible=true" >{{label}}</a>
+<ns-datepicker [options]=options  (onCanceled)="calendarVisible = false"  (onClickOut)="calendarVisible = false" (onChanged)="onChanged($event)"></ns-datepicker>
 ```
