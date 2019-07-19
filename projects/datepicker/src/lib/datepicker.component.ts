@@ -92,7 +92,7 @@ export class Day implements DayInterface {
 })
 export class DatepickerComponent implements OnInit {
 
-  private defaultOptions: Options = {
+   defaultOptions: Options = {
     weekends: [5, 6],
     weekStart: 1,
     lang: 'en',
@@ -118,14 +118,14 @@ export class DatepickerComponent implements OnInit {
   @Output() onCanceled = new EventEmitter();
   @Output() onClickOut = new EventEmitter<boolean>();
 
-  private _options: Options;
-  private _currentMonth: Date;
-  private _monthCalend: any[] = [];
-  private _monthMode: boolean = true;
-  private calend: Day[];
-  private weekCalend: any[];
-  private hoveredDate: Date;
-  private weekLabels;
+   _options: Options;
+   _currentMonth: Date;
+   _monthCalend: any[] = [];
+   _monthMode: boolean = true;
+   calend: Day[];
+   weekCalend: any[];
+   hoveredDate: Date;
+   weekLabels;
 
   clickout(event) {
     this.onClickOut.emit();
@@ -173,18 +173,18 @@ export class DatepickerComponent implements OnInit {
 
   }
 
-  private withZero(str: any) {
+   withZero(str: any) {
     str = str.toString();
     return (str.length === 1) ? '0' + str : str;
   }
 
-  private getDateKey(date: Date) {
+   getDateKey(date: Date) {
     // tslint:disable-next-line: radix
     return parseInt(date.getFullYear() + '' + this.withZero(date.getMonth()) + '' + this.withZero(date.getDate()));
   }
 
 
-  private showViewMonth(date: Date, event = null) {
+   showViewMonth(date: Date, event = null) {
     (event) ? event.stopPropagation() : null;
     const year = date.getFullYear();
     for (let k = 0; k < 4; k++) {
@@ -203,7 +203,7 @@ export class DatepickerComponent implements OnInit {
 
   }
 
-  private langs() {
+   langs() {
     const lang = {
       week: {
         en: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St'],
@@ -218,7 +218,7 @@ export class DatepickerComponent implements OnInit {
     return lang;
   }
 
-  private isDisabled(date: Date) {
+   isDisabled(date: Date) {
     const a = new Date(date);
     a.setHours(0, 0, 0, 0);
     const b = new Date(new Date());
@@ -234,26 +234,26 @@ export class DatepickerComponent implements OnInit {
     return false;
   }
 
-  private isWeekEnd(date: Date): boolean {
+   isWeekEnd(date: Date): boolean {
     return (this._options.weekends.includes(this.getNumDay(date))) ? true : false;
   }
 
-  private getMonthByNUm(num: number) {
+   getMonthByNUm(num: number) {
     const months = this.langs()['month'][this._options.lang];
     return months[num];
   }
 
-  private getFirstDayNum(date: Date): number {
+   getFirstDayNum(date: Date): number {
     const trueNum: number = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     return this.getOffsetDaysStart(trueNum);
   }
 
-  private getLastDayNum(date: Date): number {
+   getLastDayNum(date: Date): number {
     const trueNum: number = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
     return this.getOffsetDaysStart(trueNum);
   }
 
-  private clickDate(day, event = null) {
+   clickDate(day, event = null) {
     (event) ? event.stopPropagation() : null;
     if (!day.disabled) {
       this.selectDay(day);
@@ -261,7 +261,7 @@ export class DatepickerComponent implements OnInit {
 
   }
 
-  private getDaysInMonth(date: Date): number {
+   getDaysInMonth(date: Date): number {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   }
 
@@ -269,7 +269,7 @@ export class DatepickerComponent implements OnInit {
     return new Date(date.getFullYear(), date.getMonth(), 0).getDate();
   }
 
-  private getDay(date: Date): Day {
+   getDay(date: Date): Day {
     const day = new Day();
     day.key = this.getDateKey(date);
     day.num = date.getDate();
@@ -282,7 +282,7 @@ export class DatepickerComponent implements OnInit {
   }
 
   // half
-  private _getMonthsMatrix(date: Date) {
+   _getMonthsMatrix(date: Date) {
     const daysInMonth = this.getDaysInMonth(date);
     const daysInPrevMonth = this.getDaysInPrevMonth(date);
     const numFirstDay = this.getFirstDayNum(date);
@@ -332,25 +332,25 @@ export class DatepickerComponent implements OnInit {
   }
 
   // half
-  private isNowDate(date: Date) {
+   isNowDate(date: Date) {
     const now = new Date();
     return (now.getFullYear() === date.getFullYear() && now.getMonth() === date.getMonth()
       && now.getDate() === date.getDate()) ? true : false;
   }
 
-  private timeChange(data) {
+   timeChange(data) {
     this._options.initDates[data.index] = new Date(data.date);
   }
 
-  private getNumDay(date: Date): number {
+   getNumDay(date: Date): number {
     return this.getOffsetDaysStart(date.getDay());
   }
 
-  private getOffsetDaysStart(trueNum: number): number {
+   getOffsetDaysStart(trueNum: number): number {
     return (trueNum < this._options.weekStart) ? 7 + trueNum - this._options.weekStart : trueNum - this._options.weekStart;
   }
 
-  private selectDay(day: Day) {
+   selectDay(day: Day) {
     if (this._options.selection.mode !== 'single') {
       if (!this._options.initDates.includes(day.date) && !day.isSelected) {
         if (this._options.selection.mode === 'period') {
@@ -389,12 +389,12 @@ export class DatepickerComponent implements OnInit {
     (!this._options.submitMode && !this._options.timeMode) ? this.change() : null ;
   }
 
-  private hoverDate(day: Day) {
+   hoverDate(day: Day) {
     this.markPeriodDates(day);
   }
 
   // full
-  private markselectDay() {
+   markselectDay() {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.calend.length; i++) {
       const item: any = this.calend[i];
@@ -408,7 +408,7 @@ export class DatepickerComponent implements OnInit {
     }
   }
 
-  private markPeriodDates(hoveredDate: Day = null) {
+   markPeriodDates(hoveredDate: Day = null) {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.calend.length; i++) {
       const item = this.calend[i];
