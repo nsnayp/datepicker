@@ -1,6 +1,6 @@
 {
   "name": "datepicker-ns",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Angular datepicker, range pick date.",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
