@@ -365,12 +365,6 @@ export class DatepickerComponent implements OnInit {
         }
       } else {
         if (this._options.selection.mode === 'multiple') {
-          /*if (this._options.initDates.includes(day.date)) {
-            const index = this._options.initDates.findIndex(el => this.getDateKey(el) === day.key);
-            this._options.initDates.splice(index, 1);
-          }*/
-          // May be need unselect
-          // this._options.initDates.push(day.date);
           // tslint:disable-next-line: forin
           for (const i in this._options.initDates) {
             const item = this._options.initDates[i];
@@ -443,11 +437,11 @@ export class DatepickerComponent implements OnInit {
 
   showMonth(date: Date, event) {
     event.stopPropagation();
+    this._monthMode = true;
     this._currentMonth = date;
     this._getMonthsMatrix(date);
     this.markselectDay();
     this.markPeriodDates();
-
   }
 
   cancel() {
@@ -463,7 +457,6 @@ export class DatepickerComponent implements OnInit {
     data = this._options.initDates;
     this.onChanged.emit(data);
   }
-
 
 
 }
